@@ -12,3 +12,13 @@ output "alb_listener_arn" {
   description = "ARN of the ALB Listener"
   value       = aws_lb_listener.http_listener.arn
 }
+
+output "app_instance_ids" {
+  description = "IDs of the application instances"
+  value       = aws_instance.app_instance[*].id
+}
+
+output "app_instance_public_ips" {
+  description = "Public IPs of the application instances"
+  value       = aws_instance.app_instance[*].public_ip
+}

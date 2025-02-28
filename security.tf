@@ -34,3 +34,31 @@ resource "aws_security_group_rule" "alb_egress" {
   protocol    = "-1"
   cidr_blocks = ["0.0.0.0/0"]  # Allow outbound traffic
 }
+
+resource "aws_security_group" "app_sg" {
+  name        = "app-instance-sg"
+  description = "Allow traffic from ALB"
+  vpc_id      = var.vpc_id
+
+  tags = {
+    Name = "AppInstanceSG"
+  }
+}
+
+resource "aws_security_group_rule" "app_sg_ingress" {
+  security_group_id = aws_security_group.app_sg.id
+  type        = "ingress"
+  from_port   = 80
+  to_port     = 80
+  protocol    = "tcp"
+  source_security_group_id = aws_security_group.alb_sg.id  # Only allow traffic from ALB
+}
+
+resource "aws_security_group_rule" "app_sg_egress" {
+  security_group_id = aws_security_group.app_sg.id
+  type        = "egress"
+  from_port   = 0
+  to_port     = 0
+  protocol    = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+}
