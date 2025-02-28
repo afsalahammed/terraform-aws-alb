@@ -15,12 +15,12 @@ output "alb_listener_arn" {
 
 output "app_instance_ids" {
   description = "IDs of the application instances"
-  value       = aws_instance.app_instance[*].id
+  value       = { for key, instance in aws_instance.app_instance : key => instance.id }
 }
 
 output "app_instance_public_ips" {
   description = "Public IPs of the application instances"
-  value       = aws_instance.app_instance[*].public_ip
+  value       = { for key, instance in aws_instance.app_instance : key => instance.public_ip }
 }
 
 output "vpc_id" {
