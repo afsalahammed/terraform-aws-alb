@@ -22,3 +22,13 @@ output "app_instance_public_ips" {
   description = "Public IPs of the application instances"
   value       = aws_instance.app_instance[*].public_ip
 }
+
+output "vpc_id" {
+  description = "The ID of the created VPC"
+  value       = aws_vpc.app_vpc.id
+}
+
+output "public_subnet_ids" {
+  description = "The IDs of the public subnets"
+  value       = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
+}
