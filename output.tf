@@ -29,6 +29,6 @@ output "vpc_id" {
 }
 
 output "public_subnet_ids" {
-  description = "The IDs of the public subnets"
-  value       = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
+  description = "List of public subnet IDs"
+  value       = [for subnet in aws_subnet.public_subnets : subnet.id]
 }
