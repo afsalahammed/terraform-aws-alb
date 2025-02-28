@@ -1,7 +1,7 @@
 resource "aws_security_group" "alb_sg" {
   name        = "alb-security-group"
   description = "Allow HTTP and HTTPS access"
-  vpc_id      = var.vpc_id
+  vpc_id      = aws_vpc.app_vpc.id
 
   tags = {
     Name = "ALB-SG"
@@ -38,7 +38,7 @@ resource "aws_security_group_rule" "alb_egress" {
 resource "aws_security_group" "app_sg" {
   name        = "app-instance-sg"
   description = "Allow traffic from ALB"
-  vpc_id      = var.vpc_id
+  vpc_id      = aws_vpc.app_vpc.id
 
   tags = {
     Name = "AppInstanceSG"
