@@ -18,7 +18,8 @@ resource "aws_lb_target_group" "app_tg" {
 }
 
 resource "aws_lb_target_group_attachment" "tg_attachment" {
-  target_group_arn = aws_lb_target_group.app_tg.arn
-  target_id        = aws_instance.app_instance[each.key]
-  port            = 80
+  for_each          = aws_instance.app_instance  # Loop through each instance
+  target_group_arn  = aws_lb_target_group.app_tg.arn
+  target_id         = each.value.id
+  port              = 80
 }
